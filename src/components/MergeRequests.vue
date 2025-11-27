@@ -163,6 +163,7 @@ const columns: TableColumn<MergeRequest>[] = [
               variant: 'ghost',
               icon: "i-solar:ticket-line-duotone",
               to: issue.url,
+              target: "_blank",
             })
         )
       })
