@@ -2,7 +2,7 @@
   <UApp>
     <div class="flex flex-row p-2 gap-2 text-sm h-10 sticky top-0 z-20 bg-default">
 
-      <ULink to="https://github.com/vlanse/glmr" external class="flex flex-row">
+      <ULink to="https://github.com/vlanse/glmr" target="_blank" external class="flex flex-row">
         <img alt="glmr" src="/logo.png" class="h-6 max-w-6 min-w-6"/>
       </ULink>
 
@@ -58,6 +58,10 @@
           :icon="'i-solar:refresh-linear'"
           @click="groupsViewComponent.reload()"
       />
+      <div class="w-100 text-neutral">
+        <UKbd>r</UKbd>
+        to reload
+      </div>
       <div class="basis-99/100"/>
       <div class="flex flex-row gap-2" v-if="groupsViewComponent">
         <p class="text-sm text-right w-80">
@@ -82,6 +86,7 @@
             color="primary" variant="ghost"
             :icon="'i-solar:gift-line-duotone'"
             to="https://github.com/vlanse/glmr"
+            target="_blank"
         />
         <template #content>
           <p class="text-sm flex flex-row gap-2">
@@ -133,6 +138,12 @@ const installNewVersion = computed(() =>
     'go install github.com/vlanse/glmr/cmd/glmr@' + version.value.update.version
 )
 const {copy, copied} = useClipboard()
+
+defineShortcuts({
+  r: () => {
+    groupsViewComponent.value.reload()
+  }
+})
 
 function applyFilters() {
   filterPopupOpen.value = !filterPopupOpen.value

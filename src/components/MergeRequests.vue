@@ -18,6 +18,7 @@ import {h, resolveComponent} from 'vue'
 import type {TableColumn} from '@nuxt/ui'
 import {MergeRequest, User, Issue} from '../model/mr.ts'
 import {useMrUpdate} from "../stores/mrUpdate.ts";
+import axios from "axios";
 
 const AvatarComponent = resolveComponent('UAvatar')
 const AvatarGroupComponent = resolveComponent('UAvatarGroup')
@@ -105,7 +106,7 @@ const columns: TableColumn<MergeRequest>[] = [
         return ''
       }
 
-      let color = ''
+      let color
       if (mr.status.outdated) {
         color = 'error'
       } else if (mr.age == '9d' || mr.age == '8d' || mr.age == '7d') {
@@ -157,16 +158,38 @@ const columns: TableColumn<MergeRequest>[] = [
 
       mr.issues?.forEach((issue: Issue) => {
         children.push(
-            h(ButtonComponent, {
+            h(
+                TooltipComponent,
+                {text: 'open ticket ' + issue.key, ui: {content: 'z-25'}},
+                [h(ButtonComponent, {
+                  class: 'size-5 m-0 p-0',
+                  color: 'text-neutral',
+                  variant: 'ghost',
+                  icon: "i-solar:ticket-line-duotone",
+                  to: issue.url,
+                  target: "_blank",
+                })],
+            )
+        )
+      })
+
+      if (mr.status.editorAvailable) {
+        children.push(h(
+            TooltipComponent,
+            {text: 'open project in editor', ui: {content: 'z-25'}},
+            () => [h(ButtonComponent, {
               class: 'h-5 m-0 p-0',
               color: 'text-neutral',
               variant: 'ghost',
-              icon: "i-solar:ticket-line-duotone",
-              to: issue.url,
-              target: "_blank",
-            })
-        )
-      })
+              icon: "i-solar:meditation-round-line-duotone",
+              to: '',
+              onClick: () => {
+                mrUpdate.markMRViewed(mr)
+                openInEditor(mr.project.id)
+              },
+            })],
+        ))
+      }
 
       children.push(
           h('a', {
@@ -296,4 +319,14 @@ const columns: TableColumn<MergeRequest>[] = [
     }
   }
 ]
+
+async function openInEditor(projectID: number): Promise<boolean> {
+  return await axios.post(
+      'http://localhost:8082/editor/v1/OpenProject',
+      {
+        "projectId": projectID,
+      },
+  )
+}
+
 </script>

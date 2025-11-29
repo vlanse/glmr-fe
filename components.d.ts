@@ -25,6 +25,7 @@ declare module 'vue' {
     UColorModeButton: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/color-mode/ColorModeButton.vue')['default']
     UFormField: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/FormField.vue')['default']
     UIcon: typeof import('./node_modules/@nuxt/ui/dist/runtime/vue/components/Icon.vue')['default']
+    UKbd: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/Kbd.vue')['default']
     ULink: typeof import('./node_modules/@nuxt/ui/dist/runtime/vue/components/Link.vue')['default']
     UPopover: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/Popover.vue')['default']
     UProgress: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/Progress.vue')['default']

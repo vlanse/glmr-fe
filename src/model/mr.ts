@@ -14,6 +14,7 @@ export class User {
     avatarUrl?: string = ""
     trusted?: boolean = false
     url?: string = ""
+    isMe?: boolean = false
 }
 
 export class Status {
@@ -22,6 +23,7 @@ export class Status {
     ready?: boolean = false
     pending?: boolean = false
     outdated?: boolean = false
+    editorAvailable?: boolean = false
 }
 
 export class Comments {

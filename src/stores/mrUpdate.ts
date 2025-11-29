@@ -46,6 +46,10 @@ export const useMrUpdate = defineStore('mrUpdate', {
             return count
         },
         addMRInfo(mr: MergeRequest): boolean {
+            if (mr.status.outdated || mr.author.isMe) {
+                return false
+            }
+
             const key = mr.project.id.toString() + '_' + mr.iid.toString()
 
             let u = this.updates.get(key) as mrUpdate

@@ -160,9 +160,7 @@ function reload() {
     let hasFirstSeen: boolean = false
     res.forEach((group: Group) => {
       group.mergeRequests.forEach((mr: MergeRequest) => {
-        if (!mr.status.outdated) {
-          hasFirstSeen = mrUpdate.addMRInfo(mr)
-        }
+        hasFirstSeen = mrUpdate.addMRInfo(mr)
         currentMRs.value.push(mr)
       })
     })
