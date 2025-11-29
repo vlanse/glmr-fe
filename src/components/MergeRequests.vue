@@ -176,9 +176,9 @@ const columns: TableColumn<MergeRequest>[] = [
       if (mr.status.editorAvailable) {
         children.push(h(
             TooltipComponent,
-            {text: 'open project in editor', ui: {content: 'z-25'}},
+            {text: 'open project in local editor', ui: {content: 'z-25'}},
             () => [h(ButtonComponent, {
-              class: 'h-5 m-0 p-0',
+              class: 'h-5 m-0 p-0 cursor-pointer',
               color: 'text-neutral',
               variant: 'ghost',
               icon: "i-solar:meditation-round-line-duotone",
