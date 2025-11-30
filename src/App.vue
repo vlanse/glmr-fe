@@ -1,7 +1,6 @@
 <template>
   <UApp>
     <div class="flex flex-row p-2 gap-2 text-sm h-10 sticky top-0 z-20 bg-default">
-
       <ULink to="https://github.com/vlanse/glmr" target="_blank" external class="flex flex-row">
         <img alt="glmr" src="/logo.png" class="h-6 max-w-6 min-w-6"/>
       </ULink>
@@ -126,6 +125,7 @@ import {useClipboard} from '@vueuse/core'
 
 import GroupsView from "./views/GroupsView.vue";
 import {useMrFilter} from "./stores/mrFilter.ts";
+import {version as uiVersion} from '../package.json'
 
 
 const groupsViewComponent = ref()
@@ -198,12 +198,31 @@ onMounted(() => {
 
   setInterval(() => {
     checkVersion()
-  }, 4 * 60 * 60 * 1000)
+  }, 60 * 1000)
 })
 
 function checkVersion() {
   getVersion().then(data => {
     version.value = data
+
+    if (version.value.currentVersion !== 'v' + uiVersion) {
+      useToast().add({
+        title: 'Application was updated.',
+        description: 'Please reload the page.',
+        progress: false,
+        duration: 1000_000,
+        color: 'primary',
+        icon: 'i-solar:gift-line-duotone',
+        actions: [{
+          label: 'Reload',
+          color: 'neutral',
+          variant: 'outline',
+          onClick: () => {
+            window.location.reload()
+          }
+        }]
+      })
+    }
   })
 }
 

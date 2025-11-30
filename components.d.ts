@@ -19,6 +19,7 @@ declare module 'vue' {
     UAvatar: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/Avatar.vue')['default']
     UAvatarGroup: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/AvatarGroup.vue')['default']
     UBadge: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/Badge.vue')['default']
+    UBanner: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/Banner.vue')['default']
     UButton: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/Button.vue')['default']
     UCheckbox: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/Checkbox.vue')['default']
     UChip: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/Chip.vue')['default']
