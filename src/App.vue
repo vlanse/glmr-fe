@@ -142,7 +142,10 @@ const {copy, copied} = useClipboard()
 defineShortcuts({
   r: () => {
     groupsViewComponent.value.reload()
-  }
+  },
+  к: () => {
+    groupsViewComponent.value.reload()
+  },
 })
 
 function applyFilters() {
