@@ -37,6 +37,12 @@ export class Issue {
     url: string = ""
 }
 
+export class DiffStatsSummary {
+    additions: number = 0
+    deletions: number = 0
+    fileCount: number = 0
+}
+
 export class MergeRequest {
     project: Project = new Project()
     iid: number = 0
@@ -49,6 +55,7 @@ export class MergeRequest {
     age?: string = ""
     approvedBefore: boolean = false
     issues?: Issue[] = []
+    diffStatsSummary: DiffStatsSummary = new DiffStatsSummary()
 }
 
 export class GroupSummary {

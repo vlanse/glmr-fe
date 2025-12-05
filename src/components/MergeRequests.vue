@@ -26,6 +26,7 @@ const TooltipComponent = resolveComponent('UTooltip')
 const IconComponent = resolveComponent('UIcon')
 const BadgeComponent = resolveComponent('UBadge')
 const ButtonComponent = resolveComponent('UButton')
+const DiffSummaryComponent = resolveComponent('DiffSummary')
 
 const props = defineProps({
   mrs: {
@@ -200,6 +201,22 @@ const columns: TableColumn<MergeRequest>[] = [
 
       return h('div', {class: 'group flex flex-row gap-2'}, children)
     }
+  },
+  {
+    accessorKey: 'diffSummary',
+    header: '',
+    meta: {
+      class: {td: 'w-2 min-w-27 truncate mr-30'},
+    },
+    cell: ({row}: any) => {
+      const mr = row.original as MergeRequest
+      return h(DiffSummaryComponent, {
+        added: mr.diffStatsSummary.additions,
+        removed: mr.diffStatsSummary.deletions,
+        files: mr.diffStatsSummary.fileCount,
+        class: 'float-right'
+      },)
+    },
   },
   {
     accessorKey: 'status',
