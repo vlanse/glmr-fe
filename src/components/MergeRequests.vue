@@ -9,13 +9,13 @@
         thead: 'hidden',
         th: 'hidden',
       }"
+      @select="onSelect"
   />
 </template>
 
-
 <script setup lang="ts">
 import {h, resolveComponent} from 'vue'
-import type {TableColumn} from '@nuxt/ui'
+import type {TableColumn, TableRow} from '@nuxt/ui'
 import {MergeRequest, User, Issue} from '../model/mr.ts'
 import {useMrUpdate} from "../stores/mrUpdate.ts";
 import axios from "axios";
@@ -84,7 +84,7 @@ const columns: TableColumn<MergeRequest>[] = [
     accessorKey: 'project',
     header: '',
     meta: {
-      class: {td: 'w-15'},
+      class: {td: 'w-15 light:text-gray-700'},
     },
     cell: ({row}: any) => {
       const mr = row.original as MergeRequest
@@ -194,7 +194,10 @@ const columns: TableColumn<MergeRequest>[] = [
 
       children.push(
           h('a', {
-                href: mr.url, target: "_blank", onClick: () => mrUpdate.markMRViewed(mr),
+                href: mr.url,
+                target: "_blank",
+                onClick: () => mrUpdate.markMRViewed(mr),
+                class: 'light:text-gray-700',
               }, mr.description,
           )
       )
@@ -344,6 +347,10 @@ async function openInEditor(projectID: number): Promise<boolean> {
         "projectId": projectID,
       },
   )
+}
+
+function onSelect(_: Event, row: TableRow<MergeRequest>,) {
+  row.toggleSelected(!row.getIsSelected())
 }
 
 </script>

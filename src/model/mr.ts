@@ -60,7 +60,9 @@ export class MergeRequest {
 
 export class GroupSummary {
     total: number = 0
+    visible: number = 0
     overdue: number = 0
+    overdueVisible: number = 0
 }
 
 export class Group {

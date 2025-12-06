@@ -23,15 +23,17 @@
             <UTooltip text="total MRs" :ui="{content:'z-25'}">
               <div class="flex flex-row">
                 <UIcon name="i-solar:layers-line-duotone" class="h-5"/>
-                <p v-if="!useMrFilter().isEmpty && item.summary.total !== item.mergeRequests.length" class="h-7 ml-0.5">
-                  {{ item.mergeRequests.length }} of {{ item.summary.total }}</p>
+                <p v-if="item.summary.total !== item.summary.visible" class="h-7 ml-0.5">
+                  {{ item.summary.visible }} of {{ item.summary.total }}</p>
                 <p v-else class="h-7 ml-0.5">{{ item.summary.total }}</p>
               </div>
             </UTooltip>
             <UTooltip text="overdue MRs" :ui="{content:'z-25'}" v-if="item.summary.overdue>0">
               <div class="flex flex-row">
                 <UIcon name="i-solar:flame-line-duotone" class="text-error h-5"/>
-                <p class="h-7 ml-0.5">{{ item.summary.overdue }}</p>
+                <p v-if="item.summary.overdue !== item.summary.overdueVisible" class="h-7 ml-0.5">
+                  {{ item.summary.overdueVisible }} of {{ item.summary.overdue }}</p>
+                <p v-else class="h-7 ml-0.5">{{ item.summary.overdue }}</p>
               </div>
             </UTooltip>
             <UTooltip
