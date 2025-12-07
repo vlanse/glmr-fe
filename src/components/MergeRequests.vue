@@ -135,7 +135,7 @@ const columns: TableColumn<MergeRequest>[] = [
             h(TooltipComponent, {text: 'new', ui: {content: 'z-25'}},
                 () => [h(
                     IconComponent,
-                    {name: 'i-solar:star-shine-linear', class: 'size-5 text-warning'},
+                    {name: 'i-solar:bolt-linear', class: 'size-5 text-warning'},
                 )],
             ),
         )
@@ -243,25 +243,49 @@ const columns: TableColumn<MergeRequest>[] = [
       }
       if (mr.status.pipelineFailed) {
         children.push(
-            h(TooltipComponent, {text: 'pipeline failed', ui: {content: 'z-25'}},
-                () => [h(IconComponent, {
-                  name: 'solar:cloud-bolt-minimalistic-line-duotone',
-                  class: 'size-5 text-error'
+            h(
+                TooltipComponent,
+                {text: 'pipeline failed', ui: {content: 'z-25'}},
+                () => [h(ButtonComponent, {
+                  class: 'h-5 m-0 p-0 cursor-pointer text-error',
+                  color: 'text-error',
+                  variant: 'ghost',
+                  icon: "solar:cloud-bolt-minimalistic-line-duotone",
+                  to: mr.headPipeline.webUrl,
+                  target: '_blank',
                 })],
-            ),
+            )
         )
       }
       if (mr.status.ready) {
         children.push(
-            h(TooltipComponent, {text: 'ready', ui: {content: 'z-25'}},
-                () => [h(IconComponent, {name: 'i-solar:confetti-line-duotone', class: 'size-5 text-primary'})],
+            h(
+                TooltipComponent,
+                {text: 'ready', ui: {content: 'z-25'}},
+                () => [h(ButtonComponent, {
+                  class: 'h-5 m-0 p-0 cursor-pointer text-primary',
+                  color: 'text-primary',
+                  variant: 'ghost',
+                  icon: "i-solar:confetti-line-duotone",
+                  to: mr.headPipeline.webUrl,
+                  target: '_blank',
+                })],
             )
         )
       }
       if (mr.status.pending) {
         children.push(
-            h(TooltipComponent, {text: 'waiting for action', ui: {content: 'z-25'}},
-                () => [h(IconComponent, {name: 'i-solar:hourglass-line-duotone', class: 'size-5 text-neutral'})],
+            h(
+                TooltipComponent,
+                {text: 'waiting for action', ui: {content: 'z-25'}},
+                () => [h(ButtonComponent, {
+                  class: 'h-5 m-0 p-0 text-neutral' + (mr.headPipeline.webUrl.length > 0 ? ' cursor-pointer' : ''),
+                  color: 'text-neutral',
+                  variant: 'ghost',
+                  icon: "i-solar:hourglass-line-duotone",
+                  to: mr.headPipeline.webUrl,
+                  target: '_blank',
+                })],
             )
         )
       }

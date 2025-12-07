@@ -43,6 +43,10 @@ export class DiffStatsSummary {
     fileCount: number = 0
 }
 
+export class Pipeline {
+    webUrl: string = ""
+}
+
 export class MergeRequest {
     project: Project = new Project()
     iid: number = 0
@@ -56,6 +60,7 @@ export class MergeRequest {
     approvedBefore: boolean = false
     issues?: Issue[] = []
     diffStatsSummary: DiffStatsSummary = new DiffStatsSummary()
+    headPipeline: Pipeline = new Pipeline()
 }
 
 export class GroupSummary {

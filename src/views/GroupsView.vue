@@ -41,7 +41,7 @@
                 v-if="useMrUpdate().countFreshMRs(item.mergeRequests)>0"
             >
               <div class="flex flex-row">
-                <UIcon name="i-solar:star-shine-linear" class="text-warning h-5"/>
+                <UIcon name="i-solar:bolt-linear" class="text-warning h-5"/>
                 <p class="h-7 ml-0.5">{{ useMrUpdate().countFreshMRs(item.mergeRequests) }}</p>
               </div>
             </UTooltip>
