@@ -5,7 +5,7 @@
       <UAccordion
           :items="groups"
           type="multiple"
-          class="w-6/8 min-w-200"
+          class="w-3/4 min-w-240"
           v-model="activeGroups"
           :ui="{
           content:'overflow-clip',
