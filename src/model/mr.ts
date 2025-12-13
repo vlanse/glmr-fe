@@ -68,6 +68,8 @@ export class GroupSummary {
     visible: number = 0
     overdue: number = 0
     overdueVisible: number = 0
+    draft: number = 0
+    draftVisible: number = 0
 }
 
 export class Group {

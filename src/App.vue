@@ -57,7 +57,7 @@
           :icon="'i-solar:refresh-linear'"
           @click="groupsViewComponent.reload()"
       />
-      <div class="w-100 text-neutral">
+      <div class="min-w-45 text-neutral">
         <UKbd>r</UKbd>
         to reload
       </div>

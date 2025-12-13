@@ -1,61 +1,68 @@
 <template>
   <div class="flex flex-col">
     <UProgress v-model="progress" class="mb-1 sticky top-10 z-11" size="xs"/>
-    <UAccordion
-        :items="groups"
-        type="multiple"
-        v-model="activeGroups"
-        :ui="{
+    <div class="flex justify-center">
+      <UAccordion
+          :items="groups"
+          type="multiple"
+          class="w-6/8 min-w-200"
+          v-model="activeGroups"
+          :ui="{
           content:'overflow-clip',
           header:'sticky top-10 bg-default z-10 h-10 flex border-b border-default',
           item: 'border-0',
         }"
-    >
+      >
+        <template #default="{ item }">
+          <div class="flex flex-row justify-center ml-2 gap-5 items-center">
+            <div class="justify-self-center text-left p-1 min-w-40">{{ item.name }}</div>
 
-      <template #default="{ item }">
-        <div class="flex flex-row justify-center ml-2 gap-5">
-          <div class="justify-self-center text-left p-1">{{ item.name }}</div>
+            <USeparator orientation="vertical" class="h-7 max-w-2"/>
 
-          <USeparator orientation="vertical" class="h-7 max-w-2"/>
+            <div class="flex flex-row justify-center items-center mt-1 gap-3">
+              <Counter
+                  :visible=item.summary.visible
+                  :total=item.summary.total
+                  icon="i-solar:layers-line-duotone"
+                  iconClass="h-5"
+                  tooltip="totalMRs"
+              />
+              <Counter
+                  :visible=item.summary.overdueVisible
+                  :total=item.summary.overdue
+                  icon="i-solar:flame-line-duotone"
+                  iconClass="text-error"
+                  tooltip="overdue MRs"
+              />
+              <Counter
+                  :visible=item.summary.draftVisible
+                  :total=item.summary.draft
+                  icon="i-solar:paper-bin-line-duotone"
+                  iconClass="text-neutral"
+                  tooltip="draft MRs"
+              />
+              <Counter
+                  v-if="useMrUpdate().countFreshMRs(item.mergeRequests)>0"
+                  :visible=useMrUpdate().countFreshMRs(item.mergeRequests)
+                  :total=useMrUpdate().countFreshMRs(item.mergeRequests)
+                  icon="i-solar:bolt-linear"
+                  iconClass="text-warning"
+                  tooltip="new MRs"
+              />
 
 
-          <div class="flex flex-row justify-center items-center mt-1 gap-2">
-            <UTooltip text="total MRs" :ui="{content:'z-25'}">
-              <div class="flex flex-row">
-                <UIcon name="i-solar:layers-line-duotone" class="h-5"/>
-                <p v-if="item.summary.total !== item.summary.visible" class="h-7 ml-0.5">
-                  {{ item.summary.visible }} of {{ item.summary.total }}</p>
-                <p v-else class="h-7 ml-0.5">{{ item.summary.total }}</p>
-              </div>
-            </UTooltip>
-            <UTooltip text="overdue MRs" :ui="{content:'z-25'}" v-if="item.summary.overdue>0">
-              <div class="flex flex-row">
-                <UIcon name="i-solar:flame-line-duotone" class="text-error h-5"/>
-                <p v-if="item.summary.overdue !== item.summary.overdueVisible" class="h-7 ml-0.5">
-                  {{ item.summary.overdueVisible }} of {{ item.summary.overdue }}</p>
-                <p v-else class="h-7 ml-0.5">{{ item.summary.overdue }}</p>
-              </div>
-            </UTooltip>
-            <UTooltip
-                text="new MRs" :ui="{content:'z-25'}"
-                v-if="useMrUpdate().countFreshMRs(item.mergeRequests)>0"
-            >
-              <div class="flex flex-row">
-                <UIcon name="i-solar:bolt-linear" class="text-warning h-5"/>
-                <p class="h-7 ml-0.5">{{ useMrUpdate().countFreshMRs(item.mergeRequests) }}</p>
-              </div>
-            </UTooltip>
+            </div>
           </div>
-        </div>
-      </template>
+        </template>
 
-      <template #body="{ item }">
-        <div class="mr-2 ml-2">
-          <MergeRequests :mrs="item.mergeRequests"/>
-        </div>
-      </template>
+        <template #body="{ item }">
+          <div class="mr-2 ml-2">
+            <MergeRequests :mrs="item.mergeRequests"/>
+          </div>
+        </template>
 
-    </UAccordion>
+      </UAccordion>
+    </div>
   </div>
 
 </template>

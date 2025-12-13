@@ -140,14 +140,14 @@ const columns: TableColumn<MergeRequest>[] = [
             ),
         )
       }
-      return h('div', {class: 'flex flex-row gap-2'}, children)
+      return h('div', {class: 'flex flex-row gap-2 items-center'}, children)
     }
   },
   {
     accessorKey: 'description',
     header: '',
     meta: {
-      class: {td: 'max-w-50 min-w-50 truncate'},
+      class: {td: 'max-w-50'},
     },
     cell: ({row}: any) => {
       const mr = row.original as MergeRequest
@@ -197,29 +197,26 @@ const columns: TableColumn<MergeRequest>[] = [
                 href: mr.url,
                 target: "_blank",
                 onClick: () => mrUpdate.markMRViewed(mr),
-                class: 'light:text-gray-700',
+                class: 'light:text-gray-700 truncate',
               }, mr.description,
           )
       )
 
-      return h('div', {class: 'group flex flex-row gap-2'}, children)
+      return h(
+          'div',
+          {class: 'flex justify-between items-center'},
+          [
+            h('div',
+                {class: 'group flex flex-row gap-2 truncate'},
+                children,
+            ),
+            h(DiffSummaryComponent, {
+              added: mr.diffStatsSummary.additions,
+              removed: mr.diffStatsSummary.deletions,
+              files: mr.diffStatsSummary.fileCount,
+            },)]
+      )
     }
-  },
-  {
-    accessorKey: 'diffSummary',
-    header: '',
-    meta: {
-      class: {td: 'w-2 min-w-27 truncate mr-30'},
-    },
-    cell: ({row}: any) => {
-      const mr = row.original as MergeRequest
-      return h(DiffSummaryComponent, {
-        added: mr.diffStatsSummary.additions,
-        removed: mr.diffStatsSummary.deletions,
-        files: mr.diffStatsSummary.fileCount,
-        class: 'float-right'
-      },)
-    },
   },
   {
     accessorKey: 'status',

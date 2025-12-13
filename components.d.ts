@@ -11,6 +11,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    Counter: typeof import('./src/components/Counter.vue')['default']
     DiffSummary: typeof import('./src/components/DiffSummary.vue')['default']
     MergeRequests: typeof import('./src/components/MergeRequests.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
