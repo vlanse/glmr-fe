@@ -1,8 +1,3 @@
-export class MergeRequestFilter {
-    showOnlyMine: boolean = false;
-    skipApprovedByMe: boolean = false;
-}
-
 export class Project {
     id: number = 0
     name: string = ""
@@ -37,6 +32,11 @@ export class Issue {
     url: string = ""
 }
 
+export class Link {
+    displayName: string = ""
+    url: string = ""
+}
+
 export class DiffStatsSummary {
     additions: number = 0
     deletions: number = 0
@@ -61,6 +61,7 @@ export class MergeRequest {
     issues?: Issue[] = []
     diffStatsSummary: DiffStatsSummary = new DiffStatsSummary()
     headPipeline: Pipeline = new Pipeline()
+    links: Link[] = []
 }
 
 export class GroupSummary {

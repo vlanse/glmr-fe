@@ -16,7 +16,7 @@
 <script setup lang="ts">
 import {h, resolveComponent} from 'vue'
 import type {TableColumn, TableRow} from '@nuxt/ui'
-import {MergeRequest, User, Issue} from '../model/mr.ts'
+import {MergeRequest, User, Issue, Link} from '../model/mr.ts'
 import {useMrUpdate} from "../stores/mrUpdate.ts";
 import axios from "axios";
 
@@ -27,6 +27,7 @@ const IconComponent = resolveComponent('UIcon')
 const BadgeComponent = resolveComponent('UBadge')
 const ButtonComponent = resolveComponent('UButton')
 const DiffSummaryComponent = resolveComponent('DiffSummary')
+const PopoverComponent = resolveComponent('UPopover')
 
 const props = defineProps({
   mrs: {
@@ -120,6 +121,7 @@ const columns: TableColumn<MergeRequest>[] = [
         variant: 'subtle',
         color: color,
       }, () => mr.age)]
+
       if (mr.status?.outdated) {
         children.push(
             h(TooltipComponent, {text: 'overdue', ui: {content: 'z-25'}},
@@ -192,6 +194,45 @@ const columns: TableColumn<MergeRequest>[] = [
         ))
       }
 
+      if (mr.links.length > 0) {
+        if (mr.links.length == 1) {
+          children.push(h(
+              TooltipComponent,
+              {text: mr.links[0] ? mr.links[0].displayName : "", ui: {content: 'z-25'}},
+              () => [
+                h(ButtonComponent, {
+                  class: 'h-5 m-0 p-0 cursor-pointer',
+                  color: 'text-neutral',
+                  variant: 'ghost',
+                  icon: "solar:square-share-line-linear",
+                  to: mr.links[0] ? mr.links[0].url : "",
+                  target: "_blank",
+                }),
+              ],
+          ))
+        } else {
+          let linkElements: any[] = []
+          mr.links.forEach((link: Link) => {
+            linkElements.push(
+                h('a', {class: 'text-sm', target: '_blank', href: link.url}, link.displayName),
+            )
+          })
+
+
+          children.push(h(PopoverComponent, {mode: 'hover', ui: {content: 'z-25'}},
+              {
+                default: () => h(ButtonComponent, {
+                  class: 'h-5 m-0 p-0 cursor-pointer',
+                  color: 'text-neutral',
+                  variant: 'ghost',
+                  icon: "solar:square-share-line-linear",
+                }),
+                content: () => h('div', {class: 'flex flex-col m-2 gap-2'}, linkElements),
+              },
+          ))
+        }
+      }
+
       children.push(
           h('a', {
                 href: mr.url,
@@ -214,7 +255,8 @@ const columns: TableColumn<MergeRequest>[] = [
               added: mr.diffStatsSummary.additions,
               removed: mr.diffStatsSummary.deletions,
               files: mr.diffStatsSummary.fileCount,
-            },)]
+            },),
+          ]
       )
     }
   },
